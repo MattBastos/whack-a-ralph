@@ -1,4 +1,4 @@
-const selectedDifficulty = "normal";
+const selectedDifficulty = document.getElementById("difficulty-selector");
 
 const state = {
   view: {
@@ -11,7 +11,7 @@ const state = {
     timerId: null,
     velocityLevels: {
       easy: 2000,
-      normal: 1000,
+      moderate: 1000,
       hard: 500,
       expert: 250,
     },
@@ -45,11 +45,13 @@ const addEnemy = () => {
   randomSquare.classList.add("enemy");
 };
 
-const moveEnemy = () =>
-  (timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty]));
+const moveEnemy = () => {
+  clearInterval(timerId);
+  timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty.value]);
+};
 
-const main = () => {
+const init = () => {
   moveEnemy();
 };
 
-main();
+init();
