@@ -10,7 +10,7 @@ Os jogadores enfrentam Ralph, que aparece aleatoriamente em diferentes áreas. O
 
 ## Demonstração
 
-Jogue um pouco clicando [aqui](hhttps://mattbastos.github.io/whack-a-ralph/).
+Jogue um pouco clicando [aqui](https://mattbastos.github.io/whack-a-ralph/).
 
 ## Como Usar
 
