@@ -8,7 +8,7 @@ const state = {
     enemy: document.querySelector(".enemy"),
   },
   values: {
-    currentTime: 2,
+    currentTime: 60,
     countDownTimerId: null,
     timerId: null,
     points: 0,
