@@ -8,7 +8,7 @@ const state = {
     enemy: document.querySelector(".enemy"),
   },
   values: {
-    currentTime: 60,
+    currentTime: 2,
     countDownTimerId: null,
     timerId: null,
     points: 0,
@@ -65,7 +65,7 @@ const countDownGameTime = () => {
     currentTime -= 1;
     timeLeft.textContent = `Tempo Restante:${currentTime}`;
 
-    if (currentTime < 0) {
+    if (currentTime <= 0) {
       clearInterval(countDownTimerId);
       clearInterval(timerId);
 
