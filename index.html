@@ -21,11 +21,11 @@
       <section class="menu">
         <section class="menu-items">
           <section class="menu-time">
-            <h2>Tempo Restante:0</h2>
+            <h2 id="time-left">Tempo Restante:0</h2>
           </section>
 
           <section class="menu-score">
-            <h2>Sua Pontuação:0</h2>
+            <h2 id="score">Sua Pontuação:0</h2>
           </section>
 
           <section class="menu-lives">
@@ -33,12 +33,26 @@
 
             <h2>x3</h2>
           </section>
+
+          <section class="menu-difficulty">
+            <h2>Dificuldade:</h2>
+
+            <select name="Seletor de Dificuldade" id="difficulty-selector">
+              <option value="easy" selected>Fácil</option>
+
+              <option value="moderate" selected>Moderada</option>
+
+              <option value="hard">Difícil</option>
+
+              <option value="expert">Profissional</option>
+            </select>
+          </section>
         </section>
       </section>
 
       <section class="panel">
         <section class="panel-row">
-          <span class="square enemy" id="1"></span>
+          <span class="square" id="1"></span>
 
           <span class="square" id="2"></span>
 
@@ -48,7 +62,7 @@
         <section class="panel-row">
           <span class="square" id="4"></span>
 
-          <span class="square" id="5"></span>
+          <span class="square enemy" id="5"></span>
 
           <span class="square" id="6"></span>
         </section>
