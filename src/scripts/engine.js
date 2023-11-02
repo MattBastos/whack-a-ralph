@@ -1,4 +1,4 @@
-const selectedDificulty = "normal";
+const selectedDifficulty = "normal";
 
 const state = {
   view: {
@@ -46,7 +46,7 @@ const addEnemy = () => {
 };
 
 const moveEnemy = () =>
-  (timerId = setInterval(addEnemy, velocityLevels[selectedDificulty]));
+  (timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty]));
 
 const main = () => {
   moveEnemy();
