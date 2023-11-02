@@ -98,9 +98,17 @@ const moveEnemy = () => {
   timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty.value]);
 };
 
+const playSoundtrack = (soundtrack) => {
+  let audio = new Audio(`./src/audios/${soundtrack}.m4a`);
+
+  audio.volume = 0.2;
+  audio.play();
+};
+
 const hitEnemy = (square) => {
   if (square.id === hitPosition) {
     points += 1;
+    playSoundtrack("hit");
     removeEnemy();
   } else if (square.id !== hitPosition && points > 0) {
     points -= 1;
