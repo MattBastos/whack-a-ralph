@@ -8,6 +8,8 @@ const state = {
     enemy: document.querySelector(".enemy"),
   },
   values: {
+    currentTime: 60,
+    countDownTimerId: null,
     timerId: null,
     points: 0,
     hitPosition: 0,
@@ -21,11 +23,23 @@ const state = {
 };
 
 let {
+  view: { timeLeft },
+} = state;
+
+let {
   view: { score },
 } = state;
 
 const {
   view: { squares },
+} = state;
+
+let {
+  values: { currentTime },
+} = state;
+
+let {
+  values: { countDownTimerId },
 } = state;
 
 let {
@@ -43,6 +57,22 @@ let {
 const {
   values: { velocityLevels },
 } = state;
+
+const countDownGameTime = () => {
+  clearInterval(countDownTimerId);
+
+  countDownTimerId = setInterval(() => {
+    currentTime -= 1;
+    timeLeft.textContent = `Tempo Restante:${currentTime}`;
+
+    if (currentTime < 0) {
+      clearInterval(countDownTimerId);
+      clearInterval(timerId);
+
+      alert(`Game Over! O resultado foi: ${points}`);
+    }
+  }, 1000);
+};
 
 const removeEnemy = () =>
   squares.forEach((square) => square.classList.remove("enemy"));
@@ -89,6 +119,7 @@ const addListenerHitBox = () => {
 const init = () => {
   moveEnemy();
   addListenerHitBox();
+  countDownGameTime();
 };
 
 init();
