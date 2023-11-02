@@ -1,3 +1,5 @@
+const selectedDificulty = "normal";
+
 const state = {
   view: {
     timeLeft: document.querySelector("#time-left"),
@@ -5,25 +7,49 @@ const state = {
     squares: document.querySelectorAll(".square"),
     enemy: document.querySelector(".enemy"),
   },
-  values: {},
+  values: {
+    timerId: null,
+    velocityLevels: {
+      easy: 2000,
+      normal: 1000,
+      hard: 500,
+      expert: 250,
+    },
+  },
 };
 
+const {
+  view: { squares },
+} = state;
+
+const {
+  values: { timerId },
+} = state;
+
+const {
+  values: { velocityLevels },
+} = state;
+
 const removeEnemy = () =>
-  state.view.squares.forEach((square) => square.classList.remove("enemy"));
+  squares.forEach((square) => square.classList.remove("enemy"));
 
 const getRandomSquare = () => {
   const randomNumber = Math.floor(Math.random() * 9);
-  return state.view.squares[randomNumber];
+  return squares[randomNumber];
 };
 
 const addEnemy = () => {
   removeEnemy();
+
   const randomSquare = getRandomSquare();
   randomSquare.classList.add("enemy");
 };
 
+const moveEnemy = () =>
+  (timerId = setInterval(addEnemy, velocityLevels[selectedDificulty]));
+
 const main = () => {
-  addEnemy();
+  moveEnemy();
 };
 
 main();
