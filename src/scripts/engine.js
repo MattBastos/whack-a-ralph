@@ -13,7 +13,7 @@ const state = {
     startBtn: document.getElementById("start-btn"),
   },
   values: {
-    currentTime: 5,
+    currentTime: 10,
     countDownTimerId: null,
     timerId: null,
     hits: 0,
