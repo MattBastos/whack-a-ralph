@@ -25,14 +25,14 @@
 }
 
 .menu-time,
-.menu-score,
-.menu-lives {
+.menu-hits,
+.menu-misses {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.menu-lives {
+.menu-misses {
   gap: 0.5rem;
 }
 
@@ -46,28 +46,6 @@
 
 #misses {
   color: #ff0000;
-}
-
-#difficulty {
-  color: #00ff00;
-}
-
-#difficulty-selector {
-  padding: 7px;
-  margin-top: 0.2rem;
-  border: none;
-  outline: none;
-  background-color: #ebebeb;
-}
-
-#difficulty-selector option {
-  padding: 6px;
-  margin: 20px 0;
-}
-
-.menu img {
-  width: 60px;
-  height: 60px;
 }
 
 .panel {
