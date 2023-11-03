@@ -3,15 +3,18 @@ const selectedDifficulty = document.getElementById("difficulty-selector");
 const state = {
   view: {
     timeLeft: document.querySelector("#time-left"),
-    score: document.querySelector("#score"),
+    hitPoints: document.querySelector("#hits"),
+    missPoints: document.querySelector("#misses"),
     squares: document.querySelectorAll(".square"),
     enemy: document.querySelector(".enemy"),
   },
   values: {
-    currentTime: 60,
+    currentTime: 10,
     countDownTimerId: null,
     timerId: null,
-    points: 0,
+    hits: 0,
+    misses: 0,
+    result: 0,
     hitPosition: 0,
     velocityLevels: {
       easy: 2000,
@@ -22,66 +25,39 @@ const state = {
   },
 };
 
-let {
-  view: { timeLeft },
-} = state;
+const { view, values } = state;
 
-let {
-  view: { score },
-} = state;
-
-const {
-  view: { squares },
-} = state;
-
-let {
-  values: { currentTime },
-} = state;
-
-let {
-  values: { countDownTimerId },
-} = state;
-
-let {
-  values: { timerId },
-} = state;
-
-let {
-  values: { points },
-} = state;
-
-let {
-  values: { hitPosition },
-} = state;
-
-const {
-  values: { velocityLevels },
-} = state;
+const showGameResult = () =>
+  alert(
+    `Game Over! Acertos: ${values.hits} | Erros: ${
+      values.misses
+    } | Resultado: ${values.hits - values.misses}`
+  );
 
 const countDownGameTime = () => {
-  clearInterval(countDownTimerId);
+  clearInterval(values.countDownTimerId);
 
-  countDownTimerId = setInterval(() => {
-    currentTime -= 1;
-    timeLeft.textContent = `Tempo Restante:${currentTime}`;
+  values.countDownTimerId = setInterval(() => {
+    values.currentTime -= 1;
+    view.timeLeft.textContent = `Tempo Restante:${values.currentTime}`;
 
-    if (currentTime <= 0) {
-      clearInterval(countDownTimerId);
-      clearInterval(timerId);
+    if (values.currentTime <= 0) {
+      clearInterval(values.countDownTimerId);
+      clearInterval(values.timerId);
 
-      alert(`Game Over! O resultado foi: ${points}`);
+      showGameResult();
     }
   }, 1000);
 };
 
 const removeEnemy = () =>
-  squares.forEach((square) => square.classList.remove("enemy"));
+  view.squares.forEach((square) => square.classList.remove("enemy"));
 
 const getRandomSquare = () => {
   removeEnemy();
 
   let randomNumber = Math.floor(Math.random() * 9);
-  return squares[randomNumber];
+  return view.squares[randomNumber];
 };
 
 const addEnemy = () => {
@@ -89,13 +65,16 @@ const addEnemy = () => {
 
   let randomSquare = getRandomSquare();
   randomSquare.classList.add("enemy");
-  hitPosition = randomSquare.id;
+  values.hitPosition = randomSquare.id;
 };
 
 const moveEnemy = () => {
-  clearInterval(timerId);
+  clearInterval(values.timerId);
 
-  timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty.value]);
+  values.timerId = setInterval(
+    addEnemy,
+    values.velocityLevels[selectedDifficulty.value]
+  );
 };
 
 const playSoundtrack = (soundtrack) => {
@@ -106,20 +85,21 @@ const playSoundtrack = (soundtrack) => {
 };
 
 const hitEnemy = (square) => {
-  if (square.id === hitPosition) {
-    points += 1;
+  if (square.id === values.hitPosition) {
+    values.hits += 1;
     playSoundtrack("hit");
     removeEnemy();
-  } else if (square.id !== hitPosition && points > 0) {
-    points -= 1;
+  } else if (square.id !== values.hitPosition) {
+    values.misses += 1;
   }
 
-  score.textContent = `Sua Pontuação:${points}`;
-  hitPosition = null;
+  view.hitPoints.textContent = `Sua Pontuação:${values.hits}`;
+  view.missPoints.textContent = `Sua Pontuação:${values.misses}`;
+  values.hitPosition = null;
 };
 
 const addListenerHitBox = () => {
-  squares.forEach((square) =>
+  view.squares.forEach((square) =>
     square.addEventListener("mousedown", () => hitEnemy(square))
   );
 };
