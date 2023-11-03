@@ -18,35 +18,37 @@
 
   <body>
     <main class="container">
+      <section id="modal" class="modal">
+        <section class="modal-content">
+          <h2>Game Over!</h2>
+
+          <p>Acertos: <span id="modal-hits">0</span></p>
+
+          <p>Erros: <span id="modal-misses">0</span></p>
+
+          <p>Resultado: <span id="modal-result">0</span></p>
+
+          <button id="restart-btn">Jogar Novamente</button>
+        </section>
+      </section>
+
       <section class="menu">
         <section class="menu-items">
           <section class="menu-time">
             <h2 id="time-left">Tempo Restante:60</h2>
           </section>
 
-          <section class="menu-score">
-            <h2 id="score">Sua Pontuação:0</h2>
+          <section class="menu-hits">
+            <h2 id="hits">Acertos:0</h2>
           </section>
 
-          <section class="menu-lives">
-            <img src="./src/assets/images/player.png" alt="Imagem do Jogador" />
-
-            <h2>x3</h2>
+          <section class="menu-misses">
+            <h2 id="misses">Erros:0</h2>
           </section>
 
-          <section class="menu-difficulty">
-            <h2>Dificuldade:</h2>
-
-            <select name="Seletor de Dificuldade" id="difficulty-selector">
-              <option value="easy" selected>Fácil</option>
-
-              <option value="moderate" selected>Moderada</option>
-
-              <option value="hard">Difícil</option>
-
-              <option value="expert">Profissional</option>
-            </select>
-          </section>
+          <button id="start-btn">
+            <h2>Start</h2>
+          </button>
         </section>
       </section>
 

@@ -1,17 +1,23 @@
-const selectedDifficulty = document.getElementById("difficulty-selector");
-
 const state = {
   view: {
     timeLeft: document.querySelector("#time-left"),
-    score: document.querySelector("#score"),
+    hitPoints: document.querySelector("#hits"),
+    missPoints: document.querySelector("#misses"),
     squares: document.querySelectorAll(".square"),
     enemy: document.querySelector(".enemy"),
+    modal: document.getElementById("modal"),
+    modalHits: document.getElementById("modal-hits"),
+    modalMisses: document.getElementById("modal-misses"),
+    modalResult: document.getElementById("modal-result"),
+    restartBtn: document.getElementById("restart-btn"),
+    startBtn: document.getElementById("start-btn"),
   },
   values: {
-    currentTime: 60,
+    currentTime: 5,
     countDownTimerId: null,
     timerId: null,
-    points: 0,
+    hits: 0,
+    misses: 0,
     hitPosition: 0,
     velocityLevels: {
       easy: 2000,
@@ -22,66 +28,69 @@ const state = {
   },
 };
 
-let {
-  view: { timeLeft },
-} = state;
+const { view, values } = state;
 
-let {
-  view: { score },
-} = state;
+const removeEnemy = () =>
+  view.squares.forEach((square) => square.classList.remove("enemy"));
 
-const {
-  view: { squares },
-} = state;
+const playSoundtrack = (soundtrack) => {
+  let audio = new Audio(`./src/audios/${soundtrack}`);
 
-let {
-  values: { currentTime },
-} = state;
+  audio.volume = 0.2;
+  audio.play();
+};
 
-let {
-  values: { countDownTimerId },
-} = state;
+const playResultSoundtrack = () => {
+  const gameResult = values.hits - values.misses;
 
-let {
-  values: { timerId },
-} = state;
+  if (gameResult > 0) {
+    playSoundtrack("victory.mp3");
+    playSoundtrack("victory-cry.wav");
+  } else {
+    playSoundtrack("defeat.wav");
+  }
+};
 
-let {
-  values: { points },
-} = state;
+const showGameResult = () => {
+  view.modalHits.textContent = values.hits;
+  view.modalMisses.textContent = values.misses;
+  view.modalResult.textContent = values.hits - values.misses;
 
-let {
-  values: { hitPosition },
-} = state;
+  values.hits - values.misses > 0
+    ? (view.modalResult.style.color = "#008000")
+    : (view.modalResult.style.color = "#ff0000");
 
-const {
-  values: { velocityLevels },
-} = state;
+  view.modal.style.display = "flex";
+
+  playResultSoundtrack();
+};
+
+const resetGameResult = () => location.reload();
 
 const countDownGameTime = () => {
-  clearInterval(countDownTimerId);
+  clearInterval(values.countDownTimerId);
 
-  countDownTimerId = setInterval(() => {
-    currentTime -= 1;
-    timeLeft.textContent = `Tempo Restante:${currentTime}`;
+  values.countDownTimerId = setInterval(() => {
+    values.currentTime -= 1;
+    view.timeLeft.textContent = `Tempo Restante:${values.currentTime}`;
 
-    if (currentTime <= 0) {
-      clearInterval(countDownTimerId);
-      clearInterval(timerId);
+    if (values.currentTime === 0) {
+      clearInterval(values.countDownTimerId);
+      clearInterval(values.timerId);
 
-      alert(`Game Over! O resultado foi: ${points}`);
+      view.timeLeft.textContent = `Tempo Restante:0`;
+      values.hitPosition = 0;
+      removeEnemy();
+      showGameResult();
     }
   }, 1000);
 };
-
-const removeEnemy = () =>
-  squares.forEach((square) => square.classList.remove("enemy"));
 
 const getRandomSquare = () => {
   removeEnemy();
 
   let randomNumber = Math.floor(Math.random() * 9);
-  return squares[randomNumber];
+  return view.squares[randomNumber];
 };
 
 const addEnemy = () => {
@@ -89,38 +98,38 @@ const addEnemy = () => {
 
   let randomSquare = getRandomSquare();
   randomSquare.classList.add("enemy");
-  hitPosition = randomSquare.id;
+  values.hitPosition = randomSquare.id;
 };
 
 const moveEnemy = () => {
-  clearInterval(timerId);
+  clearInterval(values.timerId);
 
-  timerId = setInterval(addEnemy, velocityLevels[selectedDifficulty.value]);
+  values.timerId = setInterval(addEnemy, values.velocityLevels.hard);
 };
 
-const playSoundtrack = (soundtrack) => {
-  let audio = new Audio(`./src/audios/${soundtrack}.m4a`);
-
-  audio.volume = 0.2;
-  audio.play();
+const hitEnemy = () => {
+  values.hits += 1;
+  playSoundtrack("hit.wav");
+  removeEnemy();
 };
 
-const hitEnemy = (square) => {
-  if (square.id === hitPosition) {
-    points += 1;
-    playSoundtrack("hit");
-    removeEnemy();
-  } else if (square.id !== hitPosition && points > 0) {
-    points -= 1;
-  }
+const missEnemy = () => {
+  values.misses += 1;
+  playSoundtrack("miss.ogg");
+  removeEnemy();
+};
 
-  score.textContent = `Sua Pontuação:${points}`;
-  hitPosition = null;
+const hit = (square) => {
+  square.id === values.hitPosition ? hitEnemy() : missEnemy();
+
+  view.hitPoints.textContent = `Acertos:${values.hits}`;
+  view.missPoints.textContent = `Erros:${values.misses}`;
+  values.hitPosition = null;
 };
 
 const addListenerHitBox = () => {
-  squares.forEach((square) =>
-    square.addEventListener("mousedown", () => hitEnemy(square))
+  view.squares.forEach((square) =>
+    square.addEventListener("mousedown", () => hit(square))
   );
 };
 
@@ -130,4 +139,6 @@ const init = () => {
   countDownGameTime();
 };
 
-init();
+view.startBtn.addEventListener("click", init);
+
+view.restartBtn.addEventListener("click", resetGameResult);
