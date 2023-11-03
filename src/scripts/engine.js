@@ -9,6 +9,8 @@ const state = {
     modalHits: document.getElementById("modal-hits"),
     modalMisses: document.getElementById("modal-misses"),
     modalResult: document.getElementById("modal-result"),
+    restartBtn: document.getElementById("restart-btn"),
+    startBtn: document.getElementById("start-btn"),
   },
   values: {
     currentTime: 5,
@@ -54,10 +56,16 @@ const showGameResult = () => {
   view.modalMisses.textContent = values.misses;
   view.modalResult.textContent = values.hits - values.misses;
 
+  values.hits - values.misses > 0
+    ? (view.modalResult.style.color = "#008000")
+    : (view.modalResult.style.color = "#ff0000");
+
   view.modal.style.display = "flex";
 
   playResultSoundtrack();
 };
+
+const resetGameResult = () => location.reload();
 
 const countDownGameTime = () => {
   clearInterval(values.countDownTimerId);
@@ -131,4 +139,6 @@ const init = () => {
   countDownGameTime();
 };
 
-init();
+view.startBtn.addEventListener("click", init);
+
+view.restartBtn.addEventListener("click", resetGameResult);
