@@ -36,6 +36,22 @@
   gap: 0.5rem;
 }
 
+#time-left {
+  color: #ffff00;
+}
+
+#hits {
+  color: #007acc;
+}
+
+#misses {
+  color: #ff0000;
+}
+
+#difficulty {
+  color: #00ff00;
+}
+
 #difficulty-selector {
   padding: 7px;
   margin-top: 0.2rem;
