@@ -5,6 +5,10 @@ const state = {
     missPoints: document.querySelector("#misses"),
     squares: document.querySelectorAll(".square"),
     enemy: document.querySelector(".enemy"),
+    modal: document.getElementById("modal"),
+    modalHits: document.getElementById("modal-hits"),
+    modalMisses: document.getElementById("modal-misses"),
+    modalResult: document.getElementById("modal-result"),
   },
   values: {
     currentTime: 5,
@@ -46,13 +50,13 @@ const playResultSoundtrack = () => {
 };
 
 const showGameResult = () => {
-  playResultSoundtrack();
+  view.modalHits.textContent = values.hits;
+  view.modalMisses.textContent = values.misses;
+  view.modalResult.textContent = values.hits - values.misses;
 
-  alert(
-    `Game Over! Acertos: ${values.hits} | Erros: ${
-      values.misses
-    } | Resultado: ${values.hits - values.misses}`
-  );
+  view.modal.style.display = "flex";
+
+  playResultSoundtrack();
 };
 
 const countDownGameTime = () => {
