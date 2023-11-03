@@ -40,6 +40,12 @@
   font-weight: bold;
 }
 
+.modal button {
+  padding: 8px;
+  border-radius: inherit;
+  margin-top: 5px;
+}
+
 .menu {
   display: flex;
   align-items: center;
