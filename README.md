@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Desenvolvi o jogo "Whack-A-Ralph" como parte do meu portfólio de projetos de desenvolvimento web. Inspirado no universo do filme "Detona Ralph", este jogo combina diversão e desafio, oferecendo uma experiência envolvente de "Whack-a-Mole" com diferentes níveis de dificuldade, incluindo Fácil, Moderado, Difícil e Especialista.
+Desenvolvi o jogo "Whack-A-Ralph" como parte do meu portfólio de projetos de desenvolvimento web. Inspirado no universo do filme "Detona Ralph", este jogo combina diversão e desafio, oferecendo uma experiência envolvente de "Whack-a-Mole".
 
 ## Recursos
 
